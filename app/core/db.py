@@ -7,10 +7,11 @@ from app.core.config import settings
 
 url = os.environ["DATABASE_URL"]
 
-if url.startswith("postgres://"):
-    url = "postgresql+psycopg://" + url[len("postgres://")]
-elif url.startswith("postgresql://") and "+psycopg" not in url:
-    url = "postgresql+psycopg://" + url[len("postgresql://")]
+if url:
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql+psycopg://", 1)
+    elif url.startswith("postgresql://") and "+psycopg" not in url:
+        url = url.replace("postgresql://", "postgresql+psycopg://", 1)
 
 #engine = create_engine(settings.DATABASE_URL, echo=True, connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {})
 
