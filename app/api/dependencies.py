@@ -10,12 +10,7 @@ from app.repositories.user_repository import UserRepository
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
-
-def get_db() -> Session:
-    return next(get_session())
-
-
-DBSession = Annotated[Session, Depends(get_db)]
+DBSession = Annotated[Session, Depends(get_session())]
 
 Token = Annotated[str, Depends(oauth2_scheme)]
 
