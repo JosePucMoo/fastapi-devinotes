@@ -30,10 +30,11 @@ load_dotenv()
 
 url = os.environ["DATABASE_URL"]
 
-if url.startswith("postgres://"):
-    url = "postgresql+psycopg://" + url[len("postgres://")]
-elif url.startswith("postgresql://") and "+psycopg" not in url:
-    url = "postgresql+psycopg://" + url[len("postgresql://")]
+if url:
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql+psycopg://", 1)
+    elif url.startswith("postgresql://") and "+psycopg" not in url:
+        url = url.replace("postgresql://", "postgresql+psycopg://", 1)
 
 DATABASE_URL = url  
 
